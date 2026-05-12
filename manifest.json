@@ -1,0 +1,25 @@
+{
+  "name": "Inventario de Uniformes",
+  "short_name": "Uniformes",
+  "description": "Gestión de inventario de uniformes para Grupo Onesta y Masterson",
+  "start_url": "/inventario-uniformes/",
+  "scope": "/inventario-uniformes/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F5F4F0",
+  "theme_color": "#7B1C34",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

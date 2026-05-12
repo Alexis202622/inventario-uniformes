@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Generador de íconos</title></head>
+<body>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<script>
+function makeIcon(size, canvasId, filename) {
+  const c = document.getElementById(canvasId);
+  const ctx = c.getContext('2d');
+  const r = size * 0.12;
+  // Background
+  ctx.fillStyle = '#7B1C34';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, r);
+  ctx.fill();
+  // Letter U
+  ctx.fillStyle = '#fff';
+  ctx.font = `bold ${size*0.55}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('U', size/2, size/2);
+  // Download
+  c.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+  }, 'image/png');
+}
+window.onload = function() {
+  setTimeout(() => makeIcon(192, 'c192', 'icon-192.png'), 500);
+  setTimeout(() => makeIcon(512, 'c512', 'icon-512.png'), 1000);
+  document.body.innerHTML += '<p style="font-family:sans-serif;padding:20px">&#10003; Íconos descargados automáticamente. Subílos a GitHub junto con los otros archivos.</p>';
+};
+</script>
+</body>
+</html>
