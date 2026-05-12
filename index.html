@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Inventario de Uniformes</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Uniformes">
+<meta name="theme-color" content="#7B1C34" id="theme-meta">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
@@ -421,6 +427,8 @@ window.addEventListener('load',function(){
     document.getElementById('com').className='cobtn'+(c==='masterson'?' co-m':'');
     document.getElementById('btnsalida').className='bbtn '+(c==='onesta'?'bbo':'bbm');
     document.documentElement.style.setProperty('--ac',c==='onesta'?'#7B1C34':'#1B7B6B');
+    const tm=document.getElementById('theme-meta');
+    if(tm)tm.setAttribute('content',c==='onesta'?'#7B1C34':'#1B7B6B');
     setLogo();renderAll();
   }
   window.switchCo=switchCo;
@@ -660,6 +668,16 @@ window.addEventListener('load',function(){
     setTimeout(function(){t.classList.remove('show');},3000);
   }
 }); // end load
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/inventario-uniformes/sw.js')
+      .then(function(reg) { console.log('SW registrado:', reg.scope); })
+      .catch(function(err) { console.log('SW error:', err); });
+  });
+}
 </script>
 </body>
 </html>
