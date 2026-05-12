@@ -232,9 +232,6 @@ tr:hover td{background:#fafaf8}
       <button class="si" id="nav-inventario" data-view="inventario">
         <svg class="ico" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8h6M5 5h6M5 11h4"/></svg>Stock actual
       </button>
-      <button class="si" id="nav-catalogo" data-view="catalogo" style="display:none">
-        <svg class="ico" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>Cat&#225;logo
-      </button>
       <div class="slbl">Registrar</div>
       <button class="bbtn bbo" id="btnsalida">
         <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>+ Nueva salida
@@ -296,66 +293,6 @@ tr:hover td{background:#fafaf8}
       <div class="fl"><label class="flbl">Stock inicial</label><input type="number" class="fi" id="nistock" value="0" min="0"></div>
     </div>
     <div class="mact"><button class="bc" id="nicancelbtn">Cancelar</button><button class="bs" style="background:var(--warn)" id="nisavebtn">Agregar</button></div>
-  </div>
-</div>
-
-
-<!-- MODAL EDITAR SALIDA -->
-<div class="mbg" id="m-edit-sal" style="display:none" onclick="if(event.target===this)document.getElementById('m-edit-sal').style.display='none'">
-  <div class="modal">
-    <div class="mhd"><div class="mdot" style="background:var(--onesta)"></div><div class="mtit">Editar Salida</div></div>
-    <input type="hidden" id="edit-sal-id">
-    <div class="fgrid">
-      <div class="fl"><label class="flbl">Fecha</label><input type="date" class="fi" id="es-fecha"></div>
-      <div class="fl"><label class="flbl">N&#176; Documento</label><input type="text" class="fi" id="es-doc"></div>
-      <div class="fl full"><label class="flbl">&#205;tem</label><input type="text" class="fi" id="es-item" list="dl" autocomplete="off"></div>
-      <div class="fl"><label class="flbl">Unidades</label><input type="number" class="fi" id="es-units" min="1"></div>
-      <div class="fl"><label class="flbl">Categor&#237;a</label><select class="fi" id="es-cat"><option value="INICIAL">Inicial</option><option value="REPOSICION">Repos.</option></select></div>
-      <div class="fl"><label class="flbl">Estado</label><select class="fi" id="es-est"><option value="nueva">Nueva</option><option value="usada">Usada</option><option value="ambas">Ambas</option></select></div>
-      <div class="fl"><label class="flbl">Quien entrega</label><input type="text" class="fi" id="es-quien"></div>
-    </div>
-    <div class="mact"><button class="bc" onclick="document.getElementById('m-edit-sal').style.display='none'">Cancelar</button><button class="btn-s bso" onclick="saveEditSal()">Guardar cambios</button></div>
-  </div>
-</div>
-
-<!-- MODAL EDITAR ENTRADA -->
-<div class="mbg" id="m-edit-ent" style="display:none" onclick="if(event.target===this)document.getElementById('m-edit-ent').style.display='none'">
-  <div class="modal">
-    <div class="mhd"><div class="mdot" style="background:#888"></div><div class="mtit">Editar Entrada</div></div>
-    <input type="hidden" id="edit-ent-id">
-    <div class="fgrid">
-      <div class="fl"><label class="flbl">Fecha</label><input type="date" class="fi" id="ee-fecha"></div>
-      <div class="fl"><label class="flbl">Empresa</label><select class="fi" id="ee-emp"><option value="onesta">Onesta</option><option value="masterson">Masterson</option></select></div>
-      <div class="fl full"><label class="flbl">&#205;tem</label><input type="text" class="fi" id="ee-item" list="dl" autocomplete="off"></div>
-      <div class="fl"><label class="flbl">Unidades</label><input type="number" class="fi" id="ee-units" min="1"></div>
-      <div class="fl full"><label class="flbl">Proveedor / Nota</label><input type="text" class="fi" id="ee-prov"></div>
-    </div>
-    <div class="mact"><button class="bc" onclick="document.getElementById('m-edit-ent').style.display='none'">Cancelar</button><button class="btn-s bso" onclick="saveEditEnt()">Guardar cambios</button></div>
-  </div>
-</div>
-
-<!-- MODAL EDITAR CATALOGO -->
-<div class="mbg" id="m-edit-cat" style="display:none" onclick="if(event.target===this)document.getElementById('m-edit-cat').style.display='none'">
-  <div class="modal" style="max-width:380px">
-    <div class="mhd"><div class="mdot" style="background:var(--warn)"></div><div class="mtit">Editar &#205;tem Cat&#225;logo</div></div>
-    <input type="hidden" id="edit-cat-id">
-    <div class="fgrid">
-      <div class="fl full"><label class="flbl">Nombre del &#205;tem</label><input type="text" class="fi" id="ec-item" style="text-transform:uppercase"></div>
-      <div class="fl"><label class="flbl">Empresa</label><select class="fi" id="ec-emp"><option value="onesta">Onesta</option><option value="masterson">Masterson</option></select></div>
-    </div>
-    <div class="mact"><button class="bc" onclick="document.getElementById('m-edit-cat').style.display='none'">Cancelar</button><button class="btn-s" style="background:var(--warn)" onclick="saveEditCat()">Guardar cambios</button></div>
-  </div>
-</div>
-
-<!-- MODAL CONFIRMAR ELIMINAR -->
-<div class="mbg" id="m-confirm" style="display:none" onclick="if(event.target===this)document.getElementById('m-confirm').style.display='none'">
-  <div class="confirm-modal">
-    <div class="confirm-title">&#9888; Confirmar eliminaci&#243;n</div>
-    <div class="confirm-desc" id="confirm-desc">&#191;Ests seguro que quer&#233;s eliminar este registro? Esta acci&#243;n no se puede deshacer.</div>
-    <div class="confirm-acts">
-      <button class="bc" style="flex:0" onclick="document.getElementById('m-confirm').style.display='none'">Cancelar</button>
-      <button class="btn-danger" id="confirm-ok-btn">Eliminar</button>
-    </div>
   </div>
 </div>
 
@@ -602,12 +539,8 @@ window.addEventListener('load',function(){
         '<input class="tsrc" id="ss" placeholder="Buscar..." value="'+srch+'">'+
         '<select class="tsel" id="sf"><option value="">Todas</option><option value="INICIAL"'+(fcat==='INICIAL'?' selected':'')+'>Inicial</option><option value="REPOSICION"'+(fcat==='REPOSICION'?' selected':'')+'>Repos.</option></select>'+
       '</div>'+
-      '<table><thead><tr><th>Fecha</th><th>Doc.</th><th>&Iacute;tem</th><th>Cat.</th><th>Quien</th>'+(role==\'admin\'?\'<th></th>\':\'')+\'</tr></thead><tbody>\'+
-      (slice.length?slice.map(function(r){
-        var acts=role==='admin'?'<td><div class="act-wrap"><button class="act-btn act-edit" onclick="openEditSal(\''+r.id+'\')">Editar</button><button class="act-btn act-del" onclick="confirmDel(\'sal\',\''+r.id+'\',\''+r.item.replace(/\'/g,\'\'\'\')+'\')">Eliminar</button></div></td>':'';
-        var colspan=role==='admin'?6:5;
-        return '<tr><td class="mono">'+r.date+'</td><td class="mono">'+r.doc+'</td><td class="fw5">'+r.item+'</td><td><span class="badge '+(r.cat==='INICIAL'?'bi':'br')+'">'+(r.cat==='INICIAL'?'Ini':'Rep')+'</span></td><td class="muted">'+(r.quien||'&mdash;')+'</td>'+acts+'</tr>';
-      }).join(''):'<tr><td colspan="5" class="empty">Sin registros</td></tr>')+
+      '<table><thead><tr><th>Fecha</th><th>Doc.</th><th>&Iacute;tem</th><th>Cat.</th><th>Quien</th></tr></thead><tbody>'+
+      (slice.length?slice.map(function(r){return '<tr><td class="mono">'+r.date+'</td><td class="mono">'+r.doc+'</td><td class="fw5">'+r.item+'</td><td><span class="badge '+(r.cat==='INICIAL'?'bi':'br')+'">'+(r.cat==='INICIAL'?'Ini':'Rep')+'</span></td><td class="muted">'+(r.quien||'&mdash;')+'</td></tr>';}).join(''):'<tr><td colspan="5" class="empty">Sin registros</td></tr>')+
       '</tbody></table>'+
       '<div class="pag"><span class="pgi">'+total+' reg. &middot; p&aacute;g '+pg+'/'+pages+'</span>'+
         '<button class="pgb" id="pprev" '+(pg<=1?'disabled':'')+'>&#8249;</button>'+
@@ -633,11 +566,8 @@ window.addEventListener('load',function(){
       '<div class="ph"><div class="pt">Entradas &mdash; <span class="'+cl+'">'+(co==='onesta'?'Onesta':'Masterson')+'</span></div><div class="ps">Mercader&iacute;a ingresada</div></div>'+
       '<div class="sgrid"><div class="sc"><div class="sl">Ingresos</div><div class="sv">'+total+'</div></div><div class="sc"><div class="sl">Unidades</div><div class="sv">'+rows.reduce(function(a,r){return a+(+r.units||0);},0)+'</div></div></div>'+
       '<div class="tc"><div class="tbar"><input class="tsrc" id="es" placeholder="Buscar..." value="'+srch+'"></div>'+
-      '<table><thead><tr><th>Fecha</th><th>&Iacute;tem</th><th>Und.</th><th>Proveedor</th>'+(role==\'admin\'?\'<th></th>\':\'')+\'</tr></thead><tbody>\'+
-      (slice.length?slice.map(function(r){
-        var acts=role==='admin'?'<td><div class="act-wrap"><button class="act-btn act-edit" onclick="openEditEnt(\''+r.id+'\')">Editar</button><button class="act-btn act-del" onclick="confirmDel(\'ent\',\''+r.id+'\',\''+r.item.replace(/\'/g,\'\'\'\')+'\')">Eliminar</button></div></td>':'';
-        return '<tr><td class="mono">'+r.date+'</td><td class="fw5">'+r.item+'</td><td class="mono" style="text-align:center">'+r.units+'</td><td class="muted">'+(r.proveedor||'&mdash;')+'</td>'+acts+'</tr>';
-      }).join(''):'<tr><td colspan="4" class="empty">Sin entradas</td></tr>')+
+      '<table><thead><tr><th>Fecha</th><th>&Iacute;tem</th><th>Und.</th><th>Proveedor</th></tr></thead><tbody>'+
+      (slice.length?slice.map(function(r){return '<tr><td class="mono">'+r.date+'</td><td class="fw5">'+r.item+'</td><td class="mono" style="text-align:center">'+r.units+'</td><td class="muted">'+(r.proveedor||'&mdash;')+'</td></tr>';}).join(''):'<tr><td colspan="4" class="empty">Sin entradas</td></tr>')+
       '</tbody></table>'+
       '<div class="pag"><span class="pgi">'+total+' reg. &middot; p&aacute;g '+pg+'/'+pages+'</span>'+
         '<button class="pgb" id="eprev" '+(pg<=1?'disabled':'')+'>&#8249;</button>'+
@@ -737,210 +667,6 @@ window.addEventListener('load',function(){
     t.textContent=msg;t.className='toast'+(isErr?' err':'');t.classList.add('show');
     setTimeout(function(){t.classList.remove('show');},3000);
   }
-
-  // ── EXPOSE nav catalogo ──
-  function applyRoleExtra(){
-    var nc = document.getElementById('nav-catalogo');
-    if(nc) nc.style.display = role==='admin' ? 'flex' : 'none';
-  }
-
-  // Patch applyRole to also call applyRoleExtra
-  var _origApplyRole = applyRole;
-  applyRole = function(){_origApplyRole(); applyRoleExtra();};
-
-  // ── RENDER CATALOGO ──
-  function renderCatalogo(){
-    var rows = cat.filter(function(c){ return c.empresa===co; });
-    if(srch) rows = rows.filter(function(r){ return r.item.toLowerCase().includes(srch.toLowerCase()); });
-    rows = rows.slice().sort(function(a,b){ return a.item.localeCompare(b.item); });
-    var cl = co==='onesta'?'clo':'clm';
-    document.getElementById('content').innerHTML =
-      '<div class="ph"><div class="pt">Cat&aacute;logo &mdash; <span class="'+cl+'">'+(co==='onesta'?'Onesta':'Masterson')+'</span></div><div class="ps">'+rows.length+' &#237;tems registrados &middot; solo administrador</div></div>'+
-      '<div class="tc"><div class="tbar"><input class="tsrc" id="cs" placeholder="Filtrar..." value="'+srch+'"></div>'+
-      '<table><thead><tr><th>&#205;tem</th><th>Empresa</th><th></th></tr></thead><tbody>'+
-      (rows.length?rows.map(function(r){
-        return '<tr><td class="fw5">'+r.item+'</td><td class="muted">'+(r.empresa==='onesta'?'Onesta':'Masterson')+'</td>'+
-          '<td><div class="act-wrap"><button class="act-btn act-edit" onclick="openEditCat(\''+r.id+'\')">Editar</button>'+
-          '<button class="act-btn act-del" onclick="confirmDel(\'cat\',\''+r.id+'\',\''+r.item.replace(/\'/g,\'\'\'\')+'\')">Eliminar</button></div></td></tr>';
-      }).join(''):'<tr><td colspan="3" class="empty">Sin &#237;tems en el cat&#225;logo</td></tr>')+
-      '</tbody></table></div>';
-    document.getElementById('cs').addEventListener('input',function(){srch=this.value;renderAll();});
-  }
-
-  // Patch renderContent to handle catalogo view
-  var _origRenderContent = renderContent;
-  renderContent = function(){
-    if(view==='catalogo') renderCatalogo();
-    else _origRenderContent();
-  };
-
-  // Patch nav buttons to handle catalogo
-  document.querySelectorAll('.si[data-view]').forEach(function(btn){
-    btn.removeEventListener('click', btn._clickHandler);
-  });
-  document.querySelectorAll('.si[data-view]').forEach(function(btn){
-    btn._clickHandler = function(){
-      var v=this.getAttribute('data-view');
-      if((v==='salidas'||v==='entradas')&&role!=='admin'){
-        toast('Solo el Administrador puede ver el historial');return;
-      }
-      if(v==='catalogo'&&role!=='admin'){
-        toast('Solo el Administrador puede acceder al catálogo');return;
-      }
-      go(v);closeMM();
-    };
-    btn.addEventListener('click', btn._clickHandler);
-  });
-
-  // ── EDIT SALIDA ──
-  function openEditSal(id){
-    var r = sal.find(function(x){return x.id===id;});
-    if(!r) return;
-    document.getElementById('edit-sal-id').value = id;
-    document.getElementById('es-fecha').value = r.date;
-    document.getElementById('es-doc').value = r.doc;
-    document.getElementById('es-item').value = r.item;
-    document.getElementById('es-units').value = r.units;
-    document.getElementById('es-cat').value = r.cat;
-    document.getElementById('es-est').value = r.estado;
-    document.getElementById('es-quien').value = r.quien||'';
-    document.getElementById('m-edit-sal').style.display='flex';
-  }
-  window.openEditSal = openEditSal;
-
-  async function saveEditSal(){
-    var id = document.getElementById('edit-sal-id').value;
-    var item = document.getElementById('es-item').value.trim().toUpperCase();
-    var doc = document.getElementById('es-doc').value.trim();
-    if(!item||!doc){toast('Completá el documento y el ítem');return;}
-    var updates = {
-      fecha: document.getElementById('es-fecha').value,
-      documento: doc,
-      item: item,
-      unidades: +document.getElementById('es-units').value||1,
-      categoria: document.getElementById('es-cat').value,
-      estado: document.getElementById('es-est').value,
-      quien: document.getElementById('es-quien').value.trim()
-    };
-    try{
-      sync(true);
-      var res = await db.from('salidas').update(updates).eq('id', id);
-      sync(false);
-      if(res.error) throw res.error;
-      var idx = sal.findIndex(function(x){return x.id===id;});
-      if(idx>=0){
-        sal[idx].date=updates.fecha;sal[idx].doc=updates.documento;
-        sal[idx].item=updates.item;sal[idx].units=updates.unidades;
-        sal[idx].cat=updates.categoria;sal[idx].estado=updates.estado;
-        sal[idx].quien=updates.quien;
-      }
-      document.getElementById('m-edit-sal').style.display='none';
-      refreshDL();renderAll();toast('✓ Salida actualizada');
-    }catch(er){sync(false);toast('Error: '+er.message,true);}
-  }
-  window.saveEditSal = saveEditSal;
-
-  // ── EDIT ENTRADA ──
-  function openEditEnt(id){
-    var r = ent.find(function(x){return x.id===id;});
-    if(!r) return;
-    document.getElementById('edit-ent-id').value = id;
-    document.getElementById('ee-fecha').value = r.date;
-    document.getElementById('ee-emp').value = r.empresa;
-    document.getElementById('ee-item').value = r.item;
-    document.getElementById('ee-units').value = r.units;
-    document.getElementById('ee-prov').value = r.proveedor||'';
-    document.getElementById('m-edit-ent').style.display='flex';
-  }
-  window.openEditEnt = openEditEnt;
-
-  async function saveEditEnt(){
-    var id = document.getElementById('edit-ent-id').value;
-    var item = document.getElementById('ee-item').value.trim().toUpperCase();
-    if(!item){toast('Completá el ítem');return;}
-    var updates = {
-      fecha: document.getElementById('ee-fecha').value,
-      empresa: document.getElementById('ee-emp').value,
-      item: item,
-      unidades: +document.getElementById('ee-units').value||1,
-      proveedor: document.getElementById('ee-prov').value.trim()
-    };
-    try{
-      sync(true);
-      var res = await db.from('entradas').update(updates).eq('id', id);
-      sync(false);
-      if(res.error) throw res.error;
-      var idx = ent.findIndex(function(x){return x.id===id;});
-      if(idx>=0){
-        ent[idx].date=updates.fecha;ent[idx].empresa=updates.empresa;
-        ent[idx].item=updates.item;ent[idx].units=updates.unidades;
-        ent[idx].proveedor=updates.proveedor;
-      }
-      document.getElementById('m-edit-ent').style.display='none';
-      refreshDL();renderAll();toast('✓ Entrada actualizada');
-    }catch(er){sync(false);toast('Error: '+er.message,true);}
-  }
-  window.saveEditEnt = saveEditEnt;
-
-  // ── EDIT CATALOGO ──
-  function openEditCat(id){
-    var r = cat.find(function(x){return x.id===id;});
-    if(!r) return;
-    document.getElementById('edit-cat-id').value = id;
-    document.getElementById('ec-item').value = r.item;
-    document.getElementById('ec-emp').value = r.empresa;
-    document.getElementById('m-edit-cat').style.display='flex';
-  }
-  window.openEditCat = openEditCat;
-
-  async function saveEditCat(){
-    var id = document.getElementById('edit-cat-id').value;
-    var item = document.getElementById('ec-item').value.trim().toUpperCase();
-    if(!item){toast('Escribí el nombre del ítem');return;}
-    var updates = {item: item, empresa: document.getElementById('ec-emp').value};
-    try{
-      sync(true);
-      var res = await db.from('catalogo').update(updates).eq('id', id);
-      sync(false);
-      if(res.error) throw res.error;
-      var idx = cat.findIndex(function(x){return x.id===id;});
-      if(idx>=0){cat[idx].item=updates.item;cat[idx].empresa=updates.empresa;}
-      document.getElementById('m-edit-cat').style.display='none';
-      refreshDL();renderAll();toast('✓ Ítem actualizado');
-    }catch(er){sync(false);toast('Error: '+er.message,true);}
-  }
-  window.saveEditCat = saveEditCat;
-
-  // ── CONFIRM & DELETE ──
-  var _pendingDel = null;
-
-  function confirmDel(table, id, itemName){
-    _pendingDel = {table: table, id: id};
-    document.getElementById('confirm-desc').textContent =
-      '¿Estás seguro que querés eliminar "' + itemName + '"? Esta acción no se puede deshacer.';
-    document.getElementById('m-confirm').style.display='flex';
-  }
-  window.confirmDel = confirmDel;
-
-  document.getElementById('confirm-ok-btn').addEventListener('click', async function(){
-    if(!_pendingDel) return;
-    var tbl = _pendingDel.table;
-    var id = _pendingDel.id;
-    _pendingDel = null;
-    document.getElementById('m-confirm').style.display='none';
-    try{
-      sync(true);
-      var dbTable = tbl==='sal'?'salidas':tbl==='ent'?'entradas':'catalogo';
-      var res = await db.from(dbTable).delete().eq('id', id);
-      sync(false);
-      if(res.error) throw res.error;
-      if(tbl==='sal') sal = sal.filter(function(x){return x.id!==id;});
-      else if(tbl==='ent') ent = ent.filter(function(x){return x.id!==id;});
-      else cat = cat.filter(function(x){return x.id!==id;});
-      refreshDL();renderAll();toast('✓ Registro eliminado');
-    }catch(er){sync(false);toast('Error: '+er.message,true);}
-  });
-
 }); // end load
 </script>
 
