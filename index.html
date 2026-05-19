@@ -132,13 +132,14 @@ tr:hover td{background:#fafaf8}
 .bso{background:var(--o)}.bso:hover{background:var(--od)}.bsm{background:var(--m)}.bsm:hover{background:var(--md)}.bsw{background:var(--w)}.bsw:hover{background:#EA6B05}
 .adb{display:inline-flex;align-items:center;gap:5px;background:var(--wl);color:#92400E;border:1px solid #FED7AA;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;margin-bottom:12px}
 .ajbdg{display:inline-flex;align-items:center;gap:5px;background:#FFF0E6;color:#92400E;border:1px solid #FED7AA;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;margin-bottom:12px}
+.bsw{background:var(--w)}.bsw:hover{background:#EA6C00}
 .dng{padding:9px 18px;border-radius:var(--s);font-size:13px;font-weight:600;cursor:pointer;border:none;background:#DC2626;color:#fff;font-family:inherit}
 .dng:hover{background:#B91C1C}
 .empty{padding:32px 16px;text-align:center;color:var(--mu);font-size:13px}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#1A1A18;color:#fff;padding:11px 20px;border-radius:var(--s);font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:all .25s;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.err{background:#DC2626}
-@media(max-width:680px){.mb{display:flex}.sid{position:fixed;top:59px;left:0;bottom:0;width:240px;transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.15)}.sid.open{transform:translateX(0)}.sov.open{display:block}.tbs,.rtb,.rp,.tdv:nth-child(4){display:none}.sg{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}.cnt{padding:14px}}
+@media(max-width:680px){.mb{display:flex}.sid{position:fixed;top:59px;left:0;bottom:0;width:240px;transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.15)}.sid.open{transform:translateX(0)}.sov.open{display:block}.tbs,.rtb,.rp,.tdv:nth-child(4){display:none}.sg{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}.cnt{padding:14px}.aj-stock-row{flex-direction:column!important;gap:10px!important}.aj-stock-row>div:nth-child(2){display:none!important}}
 @media(min-width:681px){.mbg{align-items:center;padding:16px}.modal{border-radius:var(--r);max-width:460px}}
 </style>
 </head>
@@ -194,7 +195,7 @@ tr:hover td{background:#fafaf8}
       <button class="bb bbo" id="bsal"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>+ Nueva salida</button>
       <button class="sb2" id="bent"><svg class="ico" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v6M5 8h6"/></svg>Ingresar stock</button>
       <div class="sl" id="admsec">Administraci&#243;n</div>
-      <button class="ajbtn" id="bajuste" style="display:none"><svg class="ico" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/><circle cx="8" cy="8" r="3" fill="none"/></svg>Ajuste de stock</button>
+      <button class="si" id="bajuste" data-v="ajuste" style="display:none"><svg class="ico" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/><circle cx="8" cy="8" r="3" fill="none"/></svg>Ajuste de stock</button>
       <button class="ab" id="bnuevo"><svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5"/><path d="M5 7V5a3 3 0 016 0v2"/><circle cx="8" cy="11" r="1" fill="currentColor" stroke="none"/></svg>Nuevo tipo de uniforme</button>
     </nav>
     <!-- FIX 1: Persistent toolbar stays outside innerHTML, table content updates separately -->
@@ -263,23 +264,50 @@ tr:hover td{background:#fafaf8}
 </div>
 <!-- MODAL AJUSTE DE STOCK -->
 <div class="mbg" id="maj" style="display:none">
-  <div class="modal">
-    <div class="mhd"><div class="mdt" style="background:var(--w)"></div><div class="mtt">Ajuste de stock</div></div>
+  <div class="modal" style="max-width:420px">
+    <div class="mhd">
+      <div class="mdt" style="background:var(--w)"></div>
+      <div class="mtt">Ajuste de stock</div>
+    </div>
     <div class="ajbdg">&#9881; Solo Administrador</div>
-    <div class="mhi" style="border-color:var(--w)">Seleccion&#225; un &#237;tem y ajust&#225; su cantidad manualmente. El cambio impacta directamente en el Stock actual como una entrada o salida de ajuste.</div>
     <div class="fg">
-      <div class="fl"><label class="flb">Empresa</label><select class="fi" id="aj-emp"><option value="onesta">Onesta</option><option value="masterson">Masterson</option></select></div>
-      <div class="fl fu"><label class="flb">&#205;tem de Ropa</label><select class="fi" id="aj-item"><option value="">-- Seleccion&#225; un &#237;tem --</option></select></div>
-      <div class="fl"><label class="flb">Cantidad a ajustar</label><input type="number" class="fi" id="aj-qty" placeholder="N&#186; unidades" min="1"></div>
-      <div class="fl"><label class="flb">Tipo de ajuste</label>
-        <select class="fi" id="aj-tipo">
-          <option value="suma">Agregar unidades (+)</option>
-          <option value="resta">Quitar unidades (-)</option>
+      <div class="fl"><label class="flb">Empresa</label>
+        <select class="fi" id="aj-emp">
+          <option value="onesta">Onesta</option>
+          <option value="masterson">Masterson</option>
         </select>
       </div>
-      <div class="fl fu"><label class="flb">Motivo (opcional)</label><input type="text" class="fi" id="aj-motivo" placeholder="Ej. Conteo f&#237;sico, da&#241;o, etc."></div>
+      <div class="fl fu"><label class="flb">&#205;tem de Ropa</label>
+        <select class="fi" id="aj-item">
+          <option value="">-- Seleccioná un ítem --</option>
+        </select>
+      </div>
+      <!-- Stock actual + nueva cantidad en una fila visual -->
+      <div class="fl fu">
+        <div style="background:var(--bg);border:1px solid var(--bd);border-radius:var(--s);padding:14px 16px;">
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:100px">
+              <div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Stock actual</div>
+              <div style="font-size:32px;font-weight:600;font-family:'DM Mono',monospace;color:var(--tx)" id="aj-stock-actual">&mdash;</div>
+            </div>
+            <div style="font-size:24px;color:var(--mu)">&#8594;</div>
+            <div style="flex:1;min-width:100px">
+              <div style="font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Nueva cantidad</div>
+              <input type="number" class="fi" id="aj-nueva" placeholder="0" min="0"
+                style="font-size:24px;font-family:'DM Mono',monospace;text-align:center;font-weight:600;padding:6px 8px">
+            </div>
+          </div>
+          <div id="aj-diff-label" style="font-size:12px;color:var(--mu);margin-top:10px;min-height:18px"></div>
+        </div>
+      </div>
+      <div class="fl fu"><label class="flb">Motivo (opcional)</label>
+        <input type="text" class="fi" id="aj-motivo" placeholder="Ej. Conteo físico, devolución, etc.">
+      </div>
     </div>
-    <div class="ma"><button class="bc" id="majc">Cancelar</button><button class="bs bsw" id="majs">Aplicar ajuste</button></div>
+    <div class="ma">
+      <button class="bc" id="majc">Cancelar</button>
+      <button class="bs bsw" id="majs">Aplicar ajuste</button>
+    </div>
   </div>
 </div>
 <!-- MODAL CONFIRMAR ELIMINAR -->
@@ -428,7 +456,7 @@ document.querySelectorAll('.si[data-v]').forEach(btn=>{
 document.getElementById('bsal').addEventListener('click',()=>{openSal(null);closeMM();});
 document.getElementById('bent').addEventListener('click',()=>{openEnt(null);closeMM();});
 document.getElementById('bnuevo').addEventListener('click',()=>{openCat(null);closeMM();});
-document.getElementById('bajuste').addEventListener('click',()=>{openAj();closeMM();});
+// bajuste now navigates via data-v system
 
 function go(v){view=v;pg=1;sq='';fcat='';ra();}
 function ra(){updNav();rc();}
@@ -454,6 +482,7 @@ function rc(){
   else if(view==='entradas')rEnt(isNewView);
   else if(view==='inventario')rInv(isNewView);
   else if(view==='catalogo')rCat(isNewView);
+  else if(view==='ajuste')rAjuste(isNewView);
 }
 
 function showTable(){document.getElementById('view-table').style.display='flex';}
@@ -778,42 +807,98 @@ document.getElementById('mcs').addEventListener('click',async()=>{
 
 // ─ MODAL AJUSTE (FIX 3) ─
 function openAj(){
+  const isO=co==='onesta';
   document.getElementById('aj-emp').value=co;
-  document.getElementById('aj-qty').value='';
-  document.getElementById('aj-tipo').value='suma';
+  document.getElementById('aj-nueva').value='';
   document.getElementById('aj-motivo').value='';
+  document.getElementById('aj-stock-actual').textContent='—';
+  document.getElementById('aj-diff-label').textContent='';
   fillAjItems(co);
+  const savebtn=document.getElementById('majs');
+  savebtn.className='bs '+(isO?'bso':'bsm');
   document.getElementById('maj').style.display='flex';
 }
+
+function getStockActual(empresa,item){
+  return calcInv(empresa).find(i=>i.item===item)?.bal||0;
+}
+
 function fillAjItems(empresa){
   const sel=document.getElementById('aj-item');
-  // Get unique items for this company from catalog + sal + ent
   const items=[...new Set([
-    ...cat.filter(c=>c.empresa===empresa).map(c=>c.item),
+    ...cat.filter(c2=>c2.empresa===empresa).map(c2=>c2.item),
     ...sal.filter(s=>s.empresa===empresa).map(s=>s.item),
     ...ent.filter(e=>e.empresa===empresa).map(e=>e.item)
   ])].sort();
-  sel.innerHTML='<option value="">-- Seleccion\u00e1 un \u00edtem --</option>'+
+  sel.innerHTML='<option value="">-- Seleccioná un ítem --</option>'+
     items.map(i=>'<option value="'+i+'">'+i+'</option>').join('');
+  document.getElementById('aj-stock-actual').textContent='—';
+  document.getElementById('aj-nueva').value='';
+  document.getElementById('aj-diff-label').textContent='';
 }
+
 document.getElementById('majc').addEventListener('click',()=>document.getElementById('maj').style.display='none');
-document.getElementById('aj-emp').addEventListener('change',function(){fillAjItems(this.value);});
+
+document.getElementById('aj-emp').addEventListener('change',function(){
+  fillAjItems(this.value);
+  const isO=this.value==='onesta';
+  document.getElementById('majs').className='bs '+(isO?'bso':'bsm');
+});
+
+document.getElementById('aj-item').addEventListener('change',function(){
+  const item=this.value.trim().toUpperCase();
+  const emp=document.getElementById('aj-emp').value;
+  if(!item){
+    document.getElementById('aj-stock-actual').textContent='—';
+    document.getElementById('aj-diff-label').textContent='';
+    return;
+  }
+  const stock=getStockActual(emp,item);
+  document.getElementById('aj-stock-actual').textContent=stock;
+  const nueva=document.getElementById('aj-nueva').value;
+  if(nueva!=='')updateDiffLabel(stock,+nueva);
+});
+
+document.getElementById('aj-nueva').addEventListener('input',function(){
+  const item=document.getElementById('aj-item').value.trim().toUpperCase();
+  if(!item)return;
+  const emp=document.getElementById('aj-emp').value;
+  const stock=getStockActual(emp,item);
+  updateDiffLabel(stock,+this.value);
+});
+
+function updateDiffLabel(stockActual,nueva){
+  const lbl=document.getElementById('aj-diff-label');
+  if(isNaN(nueva)||nueva===undefined||nueva===null){lbl.textContent='';return;}
+  const diff=nueva-stockActual;
+  if(diff===0){lbl.textContent='Sin cambios';lbl.style.color='var(--mu)';return;}
+  const signo=diff>0?'+':'';
+  const col=diff>0?'#3B6D11':'#DC2626';
+  lbl.innerHTML='<span style="color:'+col+';font-weight:600">'+signo+diff+' unidades</span> respecto al stock actual';
+}
+
 document.getElementById('majs').addEventListener('click',async()=>{
   const item=document.getElementById('aj-item').value.trim().toUpperCase();
-  const qty=+document.getElementById('aj-qty').value;
-  if(!item||item===''){toast('Seleccion\u00e1 un \u00edtem de la lista');return;}
-  if(!qty||qty<=0){toast('Ingres\u00e1 una cantidad v\u00e1lida (mayor a 0)');return;}
+  const nuevaStr=document.getElementById('aj-nueva').value;
+  if(!item){toast('Seleccioná un ítem de la lista');return;}
+  if(nuevaStr===''||nuevaStr===null){toast('Ingresá la nueva cantidad');return;}
+  const nuevaCant=+nuevaStr;
+  if(isNaN(nuevaCant)||nuevaCant<0){toast('La cantidad debe ser 0 o mayor');return;}
   const emp=document.getElementById('aj-emp').value;
-  const tipo=document.getElementById('aj-tipo').value;
   const motivo=document.getElementById('aj-motivo').value.trim()||null;
+  const stockActual=getStockActual(emp,item);
+  const diff=nuevaCant-stockActual;
+  if(diff===0){toast('La nueva cantidad es igual al stock actual, no hay cambios');return;}
+  const tipo=diff>0?'suma':'resta';
+  const cantidad=Math.abs(diff);
   const d={
     id:'aj'+Date.now(),
     fecha:new Date().toISOString().slice(0,10),
     empresa:emp,
     item,
-    cantidad:qty,
+    cantidad,
     tipo,
-    motivo:motivo,
+    motivo,
     usuario:'admin'
   };
   try{
@@ -821,9 +906,46 @@ document.getElementById('majs').addEventListener('click',async()=>{
     ajustes.unshift(d);
     document.getElementById('maj').style.display='none';
     rc();
-    toast('\u2713 Ajuste aplicado: '+(tipo==='suma'?'+':'-')+qty+' unidades de '+item);
+    const signo=tipo==='suma'?'+':'-';
+    toast('✓ Ajuste aplicado: stock de '+item+' cambió a '+nuevaCant+' ('+signo+cantidad+')');
   }catch(er){toast('Error: '+er.message,1);}
 });
+
+
+// ─ AJUSTE VIEW ─
+function rAjuste(buildToolbar){
+  showTable();
+  const cl=co==='onesta'?'clo':'clm';
+  const ajCo=ajustes.filter(a=>a.empresa===co).slice().sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||''));
+  document.getElementById('view-header').innerHTML=
+    '<div class="ph"><div class="pt">Ajuste de stock &mdash; <span class="'+cl+'">'+(co==='onesta'?'Onesta':'Masterson')+'</span></div>'+
+    '<div class="ps">Solo administrador &middot; modificá el stock de cualquier ítem directamente</div></div>';
+  document.getElementById('view-stats').innerHTML='';
+  if(buildToolbar){
+    document.getElementById('view-toolbar').innerHTML=
+      '<button class="bb '+(co==='onesta'?'bbo':'bbm')+'" id="btn-naj" style="width:auto;padding:8px 18px">+ Nuevo ajuste</button>';
+    document.getElementById('btn-naj').addEventListener('click',()=>openAj());
+  }
+  const tbody=ajCo.map(a=>{
+    const signo=a.tipo==='suma'?'+':'-';
+    const col=a.tipo==='suma'?'#3B6D11':'#DC2626';
+    return '<tr>'+
+      '<td class="mn">'+(a.fecha||'—')+'</td>'+
+      '<td class="fw">'+a.item+'</td>'+
+      '<td class="mn" style="text-align:center;font-weight:700;color:'+col+'">'+signo+a.cantidad+'</td>'+
+      '<td class="mu2">'+(a.motivo||'—')+'</td>'+
+      '<td><div class="aw"><button class="ad" data-id="'+a.id+'" data-t="ajustes" data-n="'+a.item.replace(/"/g,'&quot;')+'">Elim.</button></div></td>'+
+      '</tr>';
+  }).join('');
+  document.getElementById('view-tbody').innerHTML=
+    '<table><thead><tr><th>Fecha</th><th>Ítem</th><th>Ajuste</th><th>Motivo</th><th></th></tr></thead><tbody>'+
+    (tbody||'<tr><td colspan="5" class="empty">Sin ajustes registrados aún</td></tr>')+
+    '</tbody></table>';
+  document.getElementById('view-pg').style.display='none';
+  document.querySelectorAll('.ad[data-t="ajustes"]').forEach(btn=>
+    btn.addEventListener('click',()=>confirmDel('ajustes',btn.getAttribute('data-id'),btn.getAttribute('data-n')))
+  );
+}
 
 // ─ CONFIRMAR ELIMINAR ─
 function confirmDel(tbl,id,name){
